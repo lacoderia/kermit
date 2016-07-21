@@ -1,0 +1,23 @@
+{
+  "name": "dispatcher",
+  "description": "Project for delivery boys of Lavadero",
+  "version": "0.0.1",
+  "homepage": "https://github.com/lacoderia/kermit.git",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.5.6",
+    "angular-animate": "~1.5.6",
+    "angular-aria": "~1.5.6",
+    "angular-loader": "~1.5.6",
+    "angular-material": "~1.0.9",
+    "angular-messages": "~1.5.6",
+    "angular-mocks": "~1.5.6",
+    "angular-resource": "~1.5.7",
+    "angular-route": "~1.5.6",
+    "html5-boilerplate": "^5.3.0",
+    "moment": "^2.13.0",
+    "moment-timezone": "^0.5.4",
+    "angular-local-storage": "^0.2.7"
+  }
+}

@@ -1,0 +1,25 @@
+<md-toolbar class="navigation-component" ng-if="$ctrl.getView() && $ctrl.getView() != 'task'">
+    <div class="header md-toolbar-tools" layout="row">
+        <div flex="80">
+            <img src="shared/assets/images/logo.svg" alt="Logo lavadero" class="logo">
+            <h2 class="md-flex title-app">My Washboard</h2>
+        </div>
+        <div flex="20" layout="row" layout-align="end" >
+            <span class="menu-item" ng-click="$ctrl.logout()" ng-show="$ctrl.isAuthenticated()">Salir</span>
+        </div>
+    </div>
+</md-toolbar>
+
+
+<md-toolbar class="navigation-component" md-scroll-shrink ng-if="$ctrl.getView() && $ctrl.getView() == 'task'">
+    <div class="header md-toolbar-tools" layout="row">
+        <div flex="10">
+            <md-button class="md-icon-button" ng-click="$ctrl.goTo('/todo')" aria-label="Menu">
+                <md-icon md-font-library="material-icons" class="menu-item">&#xE5C4;</md-icon>
+            </md-button>
+        </div>
+        <div flex="80" layout="row" layout-align="center">
+            <h2 class="md-flex title-app">Detalle</h2>
+        </div>
+    </div>
+</md-toolbar>

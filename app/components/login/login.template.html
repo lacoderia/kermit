@@ -1,0 +1,26 @@
+<section class="login-component" layout-gt-sm="column" layout-padding>
+    <hgroup>
+        <h1>
+            Bicimensajeros
+        </h1>
+    </hgroup>
+    <form novalidate name="$ctrl.loginForm" ng-submit="$ctrl.login()">
+        <md-input-container class="md-block">
+            <label>Usuario</label>
+            <input type="text" name="loginNickname" ng-model="$ctrl.credentials.nickname" required>
+            <div ng-messages="$ctrl.loginForm.loginNickname.$error">
+                <div ng-message="$ctrl.loginForm.loginNickname.$error.required">El correo electrónico es inválido</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Contraseña</label>
+            <input type="password" name="loginPassword" ng-model="$ctrl.credentials.password" required>
+            <div ng-messages="$ctrl.loginForm.loginPassword.$error">
+                <div ng-message="$ctrl.loginForm.loginPassword.$error.required">La contraseña es requerida</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <md-button type='submit' class="md-raised md-primary">Ingresar</md-button>
+        </md-input-container>
+    </form>
+</section>

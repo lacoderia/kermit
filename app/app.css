@@ -1,0 +1,105 @@
+.logo {
+  margin-right: 1rem;
+  max-width: 30px;
+  width: 100%; }
+
+.intro-component {
+  height: 100%; }
+
+.navigation-component .header img,
+.navigation-component .header h2 {
+  display: inline-block; }
+.navigation-component .header .menu-item {
+  color: white;
+  cursor: pointer; }
+
+.login-component {
+  left: 50%;
+  max-width: 320px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%; }
+  .login-component hgroup {
+    display: block; }
+    .login-component hgroup img {
+      max-width: 26px;
+      width: 100%; }
+  .login-component .login-component {
+    width: 100%; }
+    .login-component .login-component form {
+      width: 100%; }
+
+.todo-list-component h3, .todo-list-component h4, .todo-list-component p {
+  line-height: 1.6;
+  margin: 0; }
+.todo-list-component h3 {
+  font-size: 1rem;
+  font-weight: normal; }
+.todo-list-component md-input-container {
+  margin: 0; }
+.todo-list-component md-list-item {
+  border-bottom: 1px solid lightgray; }
+  .todo-list-component md-list-item.deprecated {
+    background: rgba(10, 10, 10, 0.1);
+    color: darkgray; }
+    .todo-list-component md-list-item.deprecated .ink-ripple {
+      color: darkgray; }
+  .todo-list-component md-list-item.warning .due-date {
+    color: darkorange; }
+  .todo-list-component md-list-item.expired .due-date {
+    color: orangered; }
+  .todo-list-component md-list-item .due-date {
+    font-size: 0.8rem; }
+  .todo-list-component md-list-item .md-list-item-text {
+    padding: 1.2rem 0; }
+.todo-list-component .md-subheader-inner {
+  padding: 16px 16px 0; }
+
+.empty-state-content {
+  margin-bottom: 32px; }
+  .empty-state-content .empty-state-image {
+    display: block;
+    margin: 2rem auto;
+    width: 50%;
+    max-width: 300px; }
+
+.task-component {
+  background: #E8EAF6; }
+  .task-component h3, .task-component p {
+    margin: 0; }
+  .task-component md-list-item.deprecated {
+    background: rgba(10, 10, 10, 0.1);
+    color: darkgray;
+    padding: 1rem 0; }
+    .task-component md-list-item.deprecated .ink-ripple {
+      color: darkgray; }
+  .task-component .due-date {
+    font-size: 1rem; }
+  .task-component .md-list-item-inner {
+    margin-bottom: 1.2rem; }
+  .task-component .task-info {
+    width: 100%; }
+    .task-component .task-info caption {
+      font-weight: bold;
+      text-align: left; }
+    .task-component .task-info thead {
+      font-weight: bold;
+      text-align: left; }
+    .task-component .task-info .order-number {
+      font-size: 2rem; }
+
+#main {
+  overflow: scroll; }
+
+.title-app {
+  color: white;
+  font-weight: bold !important; }
+  .title-app span {
+    font-size: 1rem; }
+
+.label {
+  color: #757575;
+  font-size: 16px; }
+
+/*# sourceMappingURL=app.css.map */

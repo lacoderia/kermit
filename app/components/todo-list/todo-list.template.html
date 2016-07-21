@@ -1,0 +1,35 @@
+<md-content class="todo-list-component" ng-if="!$ctrl.loading" layout="column" layout-fill flex>
+    <md-list ng-cloak class="md-dense" ng-if="$ctrl.getTasks().length">
+        <md-subheader class="md-no-sticky">
+            <div layout="column">
+                <md-input-container>
+                    <label>Buscar</label>
+                    <input ng-model="$ctrl.query">
+                </md-input-container>
+            </div>
+        </md-subheader>
+
+        <md-list-item ng-repeat="task in $ctrl.getTasks() | orderByDate | searchOrder:$ctrl.query" class="{{ $ctrl.getTaskStyle(task); }}" ng-click="$ctrl.viewDetail(task)">
+            <div class="md-list-item-text" layout="column" flex>
+                <h3>{{ task.getName()}} - {{task.getBooking().getCustomerName() }}</h3>
+                <h4>{{ task.getBooking().getOrderNumber() }}</h4>
+                <p class="due-date" ng-bind="$ctrl.getTaskTime(task)"></p>
+            </div>
+            <md-icon md-font-library="material-icons">&#xE315;</md-icon>
+        </md-list-item>
+    </md-list>
+    <div ng-if="!$ctrl.getTasks().length" layout="row" layout-align="center center" layout-fill flex>
+        <div class="empty-state-content" layout="column" layout-align="center center" layout-fill flex>
+            <img src="/app/shared/assets/images/sloth.svg" class="md-card-image empty-state-image" alt="Task">
+            <h3>No tienes tareas pendientes</h3>
+        </div>
+    </div>
+</md-content>
+
+<md-content flex ng-if="$ctrl.loading" layout="row" layout-align="center center" layout-fill>
+    <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+</md-content>
+
+<md-button class="md-fab md-fab-bottom-right" aria-label="Actualizar" ng-click="$ctrl.refreshTasks()">
+    <md-icon md-font-library="material-icons">&#xE042;</md-icon>
+</md-button>
