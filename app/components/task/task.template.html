@@ -18,11 +18,11 @@
     <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
 </md-content>
 
-<md-button class="md-fab md-fab-bottom-right" aria-label="Empezar tarea" ng-if="$ctrl.getTask().getBooking().getStatus() == 'HOLD'" ng-click="$ctrl.startTask()">
+<md-button class="md-fab md-fab-bottom-right" aria-label="Empezar tarea" ng-if="$ctrl.showActionButton('start')" ng-click="$ctrl.showConfirmStart()">
     <md-icon md-font-library="material-icons">&#xE52F;</md-icon>
 </md-button>
 
 
-<md-button class="md-fab md-fab-bottom-right" aria-label="Finalizar tarea" ng-if="$ctrl.getTask().getBooking().getStatus() == 'RECOL'" ng-click="$ctrl.showConfirm()">
+<md-button class="md-fab md-fab-bottom-right" aria-label="Finalizar tarea" ng-if="$ctrl.showActionButton('end')" ng-click="$ctrl.showConfirmEnd()">
     <md-icon md-font-library="material-icons">&#xE5CA;</md-icon>
 </md-button>

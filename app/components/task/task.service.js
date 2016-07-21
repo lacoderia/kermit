@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('task').factory('taskService', ['$http', '$q', 'API_URL_BASE', 'ORDER_STATUSES', function ($http, $q, API_URL_BASE, ORDER_STATUSES) {
+    angular.module('task').factory('taskService', ['$http', '$q', 'API_URL_BASE', 'BOOKING_STATUSES', 'TASK_CATEGORIES', function ($http, $q, API_URL_BASE, BOOKING_STATUSES, TASK_CATEGORIES) {
 
         var _task = undefined;
 
@@ -54,22 +54,70 @@
             return angular.copy(_task);
         }
 
-        function validateStatusChange(task, status) {
-            var futureStatusOptions = ORDER_STATUSES[task.getBooking().getStatus()];
-            return futureStatusOptions.indexOf(status) != -1;
+        function getFutureStatus(task) {
+            var category = task.getCategory();
+            var currentStatus = task.getBooking().getStatus();
+            var futureStatus = undefined;
+
+            switch(category) {
+                case TASK_CATEGORIES.PICKUP:
+                    // HOLD, ASIGN -> RECOL
+                    // RECOL -> ENPRO
+
+                    if (currentStatus == BOOKING_STATUSES.HOLD || currentStatus == BOOKING_STATUSES.ASIGN) {
+                        futureStatus = BOOKING_STATUSES.RECOL;
+                    } else if(BOOKING_STATUSES.RECOL) {
+                        futureStatus = BOOKING_STATUSES.ENPRO;
+                    }
+                    break;
+                case TASK_CATEGORIES.INTERNAL:
+                    // HOLD, ASIGN -> RECOL
+                    // RECOL -> ENPRO
+
+                    if (currentStatus == BOOKING_STATUSES.HOLD || currentStatus == BOOKING_STATUSES.ASIGN) {
+                        futureStatus = BOOKING_STATUSES.RECOL;
+                    } else if(BOOKING_STATUSES.RECOL) {
+                        futureStatus = BOOKING_STATUSES.ENPRO;
+                    }
+                    break;
+                case TASK_CATEGORIES.DELIVERY:
+                    // HOLD, ASIGN -> CAMIN
+                    // CAMIN -> DONE1
+
+                    if (currentStatus == BOOKING_STATUSES.HOLD ||
+                        currentStatus == BOOKING_STATUSES.ASIGN ||
+                        currentStatus == BOOKING_STATUSES.CO12 ||
+                        currentStatus == BOOKING_STATUSES.EFECT ||
+                        currentStatus == BOOKING_STATUSES.ENTRE ||
+                        currentStatus == BOOKING_STATUSES.PAID ||
+                        currentStatus == BOOKING_STATUSES.QUEJA ||
+                        currentStatus == BOOKING_STATUSES.FALTA ||
+                        currentStatus == BOOKING_STATUSES.REPRO ||
+                        currentStatus == BOOKING_STATUSES.PART
+                    ) {
+                        futureStatus = BOOKING_STATUSES.CAMIN;
+                    } else if(BOOKING_STATUSES.CAMIN) {
+                        futureStatus = BOOKING_STATUSES.DONE1;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return futureStatus;
         }
 
-        function updateTaskStatus(task, status) {
+        function updateTaskStatus(task) {
 
-            var tasksServiceURL = API_URL_BASE + '/bookings/in_the_future_by_courier?name=Marco';
-            return $http.get(tasksServiceURL)
+            var tasksServiceURL = API_URL_BASE + '/bookings/change_status';
+            return $http.post(tasksServiceURL, {
+                booking_id: task.getBooking().getId(),
+                old_status_id: task.getBooking().getStatus(),
+                new_status_id: getFutureStatus(task)
+            })
                 .then(function(response) {
                     var data = response.data;
                     if (typeof data === 'object') {
-                        if(data.bookings){
-                            _task = transformToObject(data.bookings[0], data.items[0]);
-                            _task.getBooking().setStatus(status);
-                        }
                         return data;
                     } else {
                         return $q.reject(data);
@@ -80,14 +128,33 @@
                 });
         }
         
-        function updateNotes() {
-            _task.getBooking().setInfoNotas('Prueba');
+        function updateNotes(bookingId, field, notes) {
+
+            var tasksServiceURL = API_URL_BASE + '/bookings/change_param';
+            return $http.post(tasksServiceURL, {
+                booking_id: bookingId,
+                name: field,
+                value: notes
+            })
+                .then(function(response) {
+                    var data = response.data;
+
+                    if (typeof data === 'object') {
+                        _task.getBooking().setInfoNotas(notes);
+
+                        return data;
+                    } else {
+                        return $q.reject(data);
+                    }
+
+                }, function(error){
+                    return $q.reject(error.data);
+                });
         }
         
         var service = {
             callTask: callTask,
             getTask: getTask,
-            validateStatusChange: validateStatusChange,
             updateTaskStatus: updateTaskStatus,
             updateNotes: updateNotes
         };
