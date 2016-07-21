@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function taskController($scope, $mdDialog, $mdToast, $sce, $routeParams, $location, taskService, TASK_VIEW_DEFINITION) {
+    function taskController($scope, $mdDialog, $mdToast, $sce, $routeParams, $location, taskService, TASK_VIEW_DEFINITION, BOOKING_STATUSES, TASK_CATEGORIES) {
 
         /**
          *
@@ -58,25 +58,81 @@
         /**
          *
          */
-        ctrl.startTask = function() {
-            var futureStatus = 'RECOL';
-            if(taskService.validateStatusChange(_task, futureStatus)){
-                taskService.updateTaskStatus(_task, futureStatus)
-                    .then(function(data){
-                        if(data.bookings){
-                            _task = taskService.getTask();
+        ctrl.getTaskStatus = function() {
+            return (_task) ? _task.getBooking().getStatus(): '';
+        };
 
-                            $mdToast.show(
-                                $mdToast.simple()
-                                    .textContent('¡Buen viaje!')
-                                    .position('top right')
-                            );
+        /**
+         *
+         */
+        ctrl.showActionButton = function(action) {
 
+            var show = false;
+
+            if (_task){
+
+                var status = _task.getBooking().getStatus();
+                var category = _task.getCategory();
+
+                switch(category) {
+                    case TASK_CATEGORIES.PICKUP:
+                        if (action == 'start' && (status == BOOKING_STATUSES.HOLD || status == BOOKING_STATUSES.ASIGN) ) {
+                            show = true;
+                        } else if (action == 'end' && status == BOOKING_STATUSES.RECOL) {
+                            show = true;
                         }
-                    }, function(error) {
-                        console.log(error);
-                    });
+                        break;
+                    case TASK_CATEGORIES.INTERNAL:
+                        break;
+                    case TASK_CATEGORIES.DELIVERY:
+                        if (action == 'start' &&
+                            (
+                                status == BOOKING_STATUSES.ASIGN ||
+                                status == BOOKING_STATUSES.CO12 ||
+                                status == BOOKING_STATUSES.EFECT ||
+                                status == BOOKING_STATUSES.ENTRE ||
+                                status == BOOKING_STATUSES.PAID ||
+                                status == BOOKING_STATUSES.QUEJA ||
+                                status == BOOKING_STATUSES.FALTA ||
+                                status == BOOKING_STATUSES.REPRO ||
+                                status == BOOKING_STATUSES.PART
+                            )
+                        ) {
+                            show = true;
+                        } else if (action == 'end' && status == BOOKING_STATUSES.CAMIN) {
+                            show = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
             }
+
+            return show;
+        };
+
+        /**
+         *
+         */
+        ctrl.startTask = function() {
+
+            taskService.updateTaskStatus(_task)
+                .then(function(data){
+                    if(data.bookings){
+                        _task = taskService.getTask();
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('¡Buen viaje!')
+                                .position('top right')
+                        );
+
+                        $location.path('/todo');
+                    }
+                }, function(error) {
+                    console.log(error);
+                });
 
         };
 
@@ -84,25 +140,23 @@
          *
          */
         ctrl.endTask = function() {
-            var futureStatus = 'CO12';
-            if(taskService.validateStatusChange(_task, futureStatus)){
-                taskService.updateTaskStatus(_task, futureStatus)
-                    .then(function(data){
-                        if(data.bookings){
-                            _task = taskService.getTask();
 
-                            $mdToast.show(
-                                $mdToast.simple()
-                                    .textContent('¡Buen trabajo!')
-                                    .position('top right')
-                            );
+            taskService.updateTaskStatus(_task)
+                .then(function(data){
+                    if(data.bookings){
+                        _task = taskService.getTask();
 
-                            $location.path('/todo');
-                        }
-                    }, function(error) {
-                        console.log(error);
-                    });
-            }
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('¡Buen trabajo!')
+                                .position('top right')
+                        );
+
+                        $location.path('/todo');
+                    }
+                }, function(error) {
+                    console.log(error);
+                });
 
         };
 
@@ -222,9 +276,9 @@
                 '               </md-button>' +
                 '           </div>' +
                 '       </md-toolbar>' +
-                '       <md-dialog-content>' +
-                '           <div class="md-dialog-content">' +
-                '               <md-input-container>' +
+                '       <md-dialog-content layout="row">' +
+                '           <div class="md-dialog-content" layout-fill>' +
+                '               <md-input-container layout-fill>' +
                 '                   <label>Notas</label>' +
                 '                   <textarea ng-model="$ctrl.edit.notes" placeholder="Las notas van aquí"></textarea>' +
                 '               </md-input-container>' +
@@ -259,16 +313,50 @@
          *
          */
         ctrl.editNotes = function() {
-            taskService.updateNotes();
-            _task = taskService.getTask();
-            $mdDialog.hide();
+            taskService.updateNotes(_task.getBooking().getId(), 'info_notas', ctrl.edit.notes)
+                .then(function(data){
+                    if(data.bookings){
+                        _task = taskService.getTask();
+
+                        $mdDialog.hide();
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('¡Listo!')
+                                .position('top right')
+                        );
+
+                    }
+                }, function(error) {
+                    console.log(error);
+                });
         };
 
         /**
          *
          * @param ev
          */
-        ctrl.showConfirm = function(ev) {
+        ctrl.showConfirmStart = function(ev) {
+            // Appending dialog to document.body to cover sidenav in docs app
+            var confirm = $mdDialog.confirm()
+                .title('¿Quieres comenzar el viaje?')
+                .textContent('')
+                .ariaLabel('End task')
+                .targetEvent(ev)
+                .ok('Si')
+                .cancel('No');
+            $mdDialog.show(confirm).then(function () {
+                ctrl.startTask();
+            }, function () {
+
+            });
+        };
+
+        /**
+         *
+         * @param ev
+         */
+        ctrl.showConfirmEnd = function(ev) {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()
                 .title('¿Ya terminaste el viaje?')

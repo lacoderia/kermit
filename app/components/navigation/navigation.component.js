@@ -9,6 +9,10 @@
          */
         var ctrl = this;
 
+        /**
+         *
+         * @returns {*}
+         */
         ctrl.isAuthenticated = function() {
             return sessionService.isAuthenticated();
         };
@@ -35,14 +39,6 @@
             $location.path(path);
         };
 
-        /**
-         * Inits the controller
-         */
-        var init = function () {
-
-        };
-
-        init();
     }
 
     angular

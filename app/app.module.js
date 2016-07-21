@@ -20,10 +20,6 @@ angular.module('dispatcher', [
 angular.module('dispatcher')
     .constant('AUTH_API_URL_BASE', 'http://lavader.herokuapp.com')
     .constant('API_URL_BASE', 'http://lavader.herokuapp.com')
-    .constant('ORDER_STATUSES', {
-        'HOLD': ['RECOL'],
-        'RECOL': ['CO12']
-    })
     .constant('TASK_VIEW_DEFINITION', {
         'Servicio de Lavanderia, Tintoreria y/o Planchado': [
             'order_number',
@@ -51,6 +47,27 @@ angular.module('dispatcher')
             'info',
             'payment_info'
         ]
+    })
+    .constant('TASK_CATEGORIES', {
+        'PICKUP': 'Servicio de Lavanderia, Tintoreria y/o Planchado',
+        'INTERNAL': 'Viaje Interno',
+        'DELIVERY': 'Entrega a domicilio'
+    })
+    .constant('BOOKING_STATUSES', {
+        'HOLD': 'HOLD',
+        'ASIGN': 'ASIGN',
+        'RECOL': 'RECOL',
+        'ENPRO': 'ENPRO',
+        'CAMIN': 'CAMIN',
+        'DONE1': 'DONE1',
+        'CO12': 'CO12',
+        'EFECT': 'EFECT',
+        'ENTRE': 'ENTRE',
+        'PAID': 'PAID',
+        'QUEJA': 'QUEJA',
+        'FALTA': 'FALTA',
+        'REPRO': 'REPRO',
+        'PART': 'PART'
     });
 
 
