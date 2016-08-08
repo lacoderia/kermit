@@ -1,3 +1,7 @@
+@import url(/bower_components/html5-boilerplate/dist/css/normalize.css);
+@import url(/bower_components/html5-boilerplate/dist/css/main.css);
+@import url(/bower_components/angular-material/angular-material.min.css);
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 .logo {
   margin-right: 1rem;
   max-width: 30px;
@@ -9,6 +13,7 @@
 .navigation-component .header img,
 .navigation-component .header h2 {
   display: inline-block; }
+
 .navigation-component .header .menu-item {
   color: white;
   cursor: pointer; }
@@ -33,11 +38,14 @@
 .todo-list-component h3, .todo-list-component h4, .todo-list-component p {
   line-height: 1.6;
   margin: 0; }
+
 .todo-list-component h3 {
   font-size: 1rem;
   font-weight: normal; }
+
 .todo-list-component md-input-container {
   margin: 0; }
+
 .todo-list-component md-list-item {
   border-bottom: 1px solid lightgray; }
   .todo-list-component md-list-item.deprecated {
@@ -53,6 +61,7 @@
     font-size: 0.8rem; }
   .todo-list-component md-list-item .md-list-item-text {
     padding: 1.2rem 0; }
+
 .todo-list-component .md-subheader-inner {
   padding: 16px 16px 0; }
 

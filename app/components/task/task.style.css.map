@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,SAAS;EACP,SAAS,EAAE,IAAI",
-"sources": ["taskStyles.sass"],
-"names": [],
-"file": "taskStyles.css"
-}
