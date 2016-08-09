@@ -1,7 +1,7 @@
 @import "../../assets/styles/_common/variables"
 @import "../../assets/styles/_common/mixins"
 
-.todo-list-component
+.task-list-component
 
   h3, h4, p
     line-height: 1.6
@@ -17,20 +17,20 @@
   md-list-item
     border-bottom: 1px solid lightgray
 
-    &.deprecated
-      background: rgba(10, 10, 10, 0.1)
-      color: darkgray
-
-      .ink-ripple
-        color: darkgray
+    &.done
+      opacity: 0.6
+      md-icon, h4
+        color: green !important
 
     &.warning
-      .due-date
-        color: darkorange
+      opacity: 0.6
+      md-icon, h4
+        color: red !important
 
-    &.expired
-      .due-date
-        color: orangered
+    &.in-progress
+      opacity: 0.6
+      md-icon, h4
+        color: $color-light-blue-200 !important
 
     .due-date
       font-size: 0.8rem

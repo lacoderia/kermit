@@ -68,7 +68,7 @@ angular.
                         view: 'login'
                     }).
                     when('/todo', {
-                        template: '<todo-list layout-fill layout="column" flex></todo-list>',
+                        template: '<task-list layout-fill layout="column" flex></task-list>',
                         resolve: authenticate,
                         view: 'todo'
                     }).

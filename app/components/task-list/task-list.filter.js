@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('todoList')
+        .module('taskList')
         .filter('orderByDate', function(){
         /**
          * Order tasks list by date

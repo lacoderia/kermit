@@ -13,7 +13,7 @@ angular.module('dispatcher', [
     'navigation',
     'intro',
     'login',
-    'todoList',
+    'taskList',
     'task'
 ]);
 

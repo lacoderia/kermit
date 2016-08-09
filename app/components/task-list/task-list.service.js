@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('todoList').factory('todoListService', ['$http', '$q', 'API_URL_BASE', function ($http, $q, API_URL_BASE) {
+    angular.module('taskList').factory('taskListService', ['$http', '$q', 'API_URL_BASE', function ($http, $q, API_URL_BASE) {
 
         var tasks = [];
 

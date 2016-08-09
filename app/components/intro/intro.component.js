@@ -5,7 +5,7 @@
 
         /**
          *
-         * @type {todoListController}
+         * @type {taskListController}
          */
         var ctrl = this;
 

@@ -1,24 +1,22 @@
 (function(angular) {
     'use strict';
 
-    function todoListController(todoListService, $location) {
+    function taskListController(taskListService, $location) {
 
         /**
          *
-         * @type {todoListController}
+         * @type {taskListController}
          */
         var ctrl = this;
 
+        var TASK_ICON = {
+            'DEFAULT': 'keyboard_arrow_right',
+            'DONE1': 'done',
+            'ENPRO': 'directions_bike',
+            'PROBL': 'sentiment_dissatisfied'
+        }
+
         ctrl.loading = false;
-
-        // Private variables
-
-        var TASK_STATUS_STYLES = {
-            completed: 'completed',
-            deprecated: 'deprecated',
-            expired: 'expired',
-            warning: 'warning'
-        };
 
         var tasks = [];
 
@@ -29,10 +27,10 @@
             tasks = [];
 
             ctrl.loading = true;
-            todoListService.callTasks()
+            taskListService.callTasks()
                 .then(function(data) {
                     if(data.bookings){
-                        tasks = todoListService.getTasks();
+                        tasks = taskListService.getTasks();
                         ctrl.loading = false;
                     }
                 }, function(error) {
@@ -90,15 +88,46 @@
 
         /**
          *
+         * @param task
+         * @returns {boolean}
+         */
+        ctrl.getTaskClass = function(task) {
+            var status = task.getBooking().getStatus();
+            switch(status) {
+                case 'DONE1':
+                    return 'done';
+                case 'ENPRO':
+                    return 'in-progress';
+                case 'PROBL':
+                    return 'warning';
+                default:
+                    return '';
+            }
+        };
+
+        ctrl.getTaskIcon = function (task) {
+            var status = task.getBooking().getStatus();
+            switch(status) {
+                case 'DONE1':
+                case 'ENPRO':
+                case 'PROBL':
+                    return TASK_ICON[status];
+                default:
+                    return TASK_ICON['DEFAULT'];
+            }
+        };
+
+        /**
+         *
          */
         this.$onInit = function() {
             callTasks();
         }
     }
 
-    angular.module('todoList').component('todoList', {
-        templateUrl: 'components/todo-list/todo-list.template.html',
-        controller: todoListController,
+    angular.module('taskList').component('taskList', {
+        templateUrl: 'components/task-list/task-list.template.html',
+        controller: taskListController,
         bindings: {
 
         }

@@ -35,34 +35,37 @@
     .login-component .login-component form {
       width: 100%; }
 
-.todo-list-component h3, .todo-list-component h4, .todo-list-component p {
+.task-list-component h3, .task-list-component h4, .task-list-component p {
   line-height: 1.6;
   margin: 0; }
 
-.todo-list-component h3 {
+.task-list-component h3 {
   font-size: 1rem;
   font-weight: normal; }
 
-.todo-list-component md-input-container {
+.task-list-component md-input-container {
   margin: 0; }
 
-.todo-list-component md-list-item {
+.task-list-component md-list-item {
   border-bottom: 1px solid lightgray; }
-  .todo-list-component md-list-item.deprecated {
-    background: rgba(10, 10, 10, 0.1);
-    color: darkgray; }
-    .todo-list-component md-list-item.deprecated .ink-ripple {
-      color: darkgray; }
-  .todo-list-component md-list-item.warning .due-date {
-    color: darkorange; }
-  .todo-list-component md-list-item.expired .due-date {
-    color: orangered; }
-  .todo-list-component md-list-item .due-date {
+  .task-list-component md-list-item.done {
+    opacity: 0.6; }
+    .task-list-component md-list-item.done md-icon, .task-list-component md-list-item.done h4 {
+      color: green !important; }
+  .task-list-component md-list-item.warning {
+    opacity: 0.6; }
+    .task-list-component md-list-item.warning md-icon, .task-list-component md-list-item.warning h4 {
+      color: red !important; }
+  .task-list-component md-list-item.in-progress {
+    opacity: 0.6; }
+    .task-list-component md-list-item.in-progress md-icon, .task-list-component md-list-item.in-progress h4 {
+      color: #81D4FA !important; }
+  .task-list-component md-list-item .due-date {
     font-size: 0.8rem; }
-  .todo-list-component md-list-item .md-list-item-text {
+  .task-list-component md-list-item .md-list-item-text {
     padding: 1.2rem 0; }
 
-.todo-list-component .md-subheader-inner {
+.task-list-component .md-subheader-inner {
   padding: 16px 16px 0; }
 
 .empty-state-content {
