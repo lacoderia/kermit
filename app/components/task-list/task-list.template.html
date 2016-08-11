@@ -17,7 +17,7 @@
             <md-icon md-font-library="material-icons">{{ $ctrl.getTaskIcon(task) }}</md-icon>
         </md-list-item>
     </md-list>
-    <div ng-if="!$ctrl.getTasks().length" layout="row" layout-align="center center" layout-fill flex>
+    <div ng-if="!($ctrl.getTasks() | orderByDate).length > 0" layout="row" layout-align="center center" layout-fill flex>
         <div class="empty-state-content" layout="column" layout-align="center center" layout-fill flex>
             <img src="/assets/images/sloth.svg" class="md-card-image empty-state-image" alt="Task">
             <h3>No tienes tareas pendientes</h3>
