@@ -4,7 +4,7 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "prestart": "concurrently --kill-others 'npm install' 'gulp prod'",
+    "prestart": "npm install && gulp prod",
     "start": "node ./bin/www",
     "dev": "concurrently --kill-others 'gulp default'"
   },
