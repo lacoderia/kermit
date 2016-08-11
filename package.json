@@ -4,7 +4,7 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "prestart": "gulp prod",
+    "prestart": "concurrently --kill-others 'npm install' 'gulp prod'",
     "start": "nodemon ./bin/www",
     "dev": "concurrently --kill-others 'gulp default'"
   },
@@ -17,9 +17,7 @@
     "morgan": "~1.7.0",
     "newrelic": "^1.28.3",
     "node-sass-middleware": "0.8.0",
-    "serve-favicon": "~2.3.0"
-  },
-  "devDependencies": {
+    "serve-favicon": "~2.3.0",
     "browser-sync": "^2.13.0",
     "concurrently": "^2.2.0",
     "gulp": "^3.9.1",
