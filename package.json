@@ -4,24 +4,20 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "prestart": "gulp prod",
-    "start": "nodemon ./bin/www",
+    "prestart": "npm install && gulp prod",
+    "start": "node ./bin/www",
+    "postinstall": "bower install",
     "dev": "concurrently --kill-others 'gulp default'"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
+    "bower": "^1.7.9",
+    "browser-sync": "^2.13.0",
+    "concurrently": "^2.2.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "ejs": "~2.4.1",
     "express": "~4.13.4",
-    "morgan": "~1.7.0",
-    "newrelic": "^1.28.3",
-    "node-sass-middleware": "0.8.0",
-    "serve-favicon": "~2.3.0"
-  },
-  "devDependencies": {
-    "browser-sync": "^2.13.0",
-    "concurrently": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-clean": "^0.3.2",
@@ -34,6 +30,10 @@
     "gulp-uglify": "^1.5.4",
     "gulp-util": "^3.0.7",
     "merge-stream": "^1.0.0",
-    "sassdoc": "^2.1.20"
+    "morgan": "~1.7.0",
+    "newrelic": "^1.28.3",
+    "node-sass-middleware": "0.8.0",
+    "sassdoc": "^2.1.20",
+    "serve-favicon": "~2.3.0"
   }
 }
