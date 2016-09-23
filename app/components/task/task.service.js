@@ -127,6 +127,27 @@
                     return $q.reject(error.data);
                 });
         }
+
+        function reportProblem(task) {
+
+            var tasksServiceURL = API_URL_BASE + '/bookings/change_status';
+            return $http.post(tasksServiceURL, {
+                booking_id: task.getBooking().getId(),
+                old_status_id: task.getBooking().getStatus(),
+                new_status_id: BOOKING_STATUSES.PROBL
+            })
+                .then(function(response) {
+                    var data = response.data;
+                    if (typeof data === 'object') {
+                        return data;
+                    } else {
+                        return $q.reject(data);
+                    }
+
+                }, function(error){
+                    return $q.reject(error.data);
+                });
+        }
         
         function updateNotes(bookingId, field, notes) {
 
@@ -156,6 +177,7 @@
             callTask: callTask,
             getTask: getTask,
             updateTaskStatus: updateTaskStatus,
+            reportProblem: reportProblem,
             updateNotes: updateNotes
         };
 

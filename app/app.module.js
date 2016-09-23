@@ -67,7 +67,8 @@ angular.module('dispatcher')
         'QUEJA': 'QUEJA',
         'FALTA': 'FALTA',
         'REPRO': 'REPRO',
-        'PART': 'PART'
+        'PART': 'PART',
+        'PROBL': 'PROBL'
     });
 
 

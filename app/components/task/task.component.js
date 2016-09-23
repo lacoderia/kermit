@@ -163,6 +163,36 @@
         /**
          *
          */
+        ctrl.reportProblem = function() {
+
+            taskService.reportProblem(_task)
+                .then(function(data){
+                    if(data.bookings){
+                        _task = taskService.getTask();
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('¡Reporte recibido!')
+                                .position('top right')
+                        );
+
+                        $location.path('/todo');
+                    }
+                }, function(error) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('Algo falló. Vuelve a intentarlo más tarde.')
+                            .position('top right')
+                    );
+
+                    console.log(error);
+                });
+
+        };
+
+        /**
+         *
+         */
         ctrl.getTaskView = function() {
 
             var taskView = "";
@@ -252,6 +282,7 @@
                 }
 
                 taskView += '<tr><td><md-button class="md-raised" ng-click="$ctrl.promptNotes()">Editar</md-button></td></tr>';
+                taskView += '<tr><td><md-button class="md-raised" ng-click="$ctrl.showConfirmProblem()">Reportar un problema</md-button></td></tr>';
 
             }
 
@@ -367,6 +398,26 @@
                 .cancel('No');
             $mdDialog.show(confirm).then(function () {
                 ctrl.endTask();
+            }, function () {
+
+            });
+        };
+
+        /**
+         *
+         * @param ev
+         */
+        ctrl.showConfirmProblem = function(ev) {
+            // Appending dialog to document.body to cover sidenav in docs app
+            var confirm = $mdDialog.confirm()
+                .title('¿Quieres reportar un problema con este viaje?')
+                .textContent('')
+                .ariaLabel('Report problem')
+                .targetEvent(ev)
+                .ok('Si')
+                .cancel('No');
+            $mdDialog.show(confirm).then(function () {
+                ctrl.reportProblem();
             }, function () {
 
             });
