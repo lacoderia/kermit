@@ -13,7 +13,9 @@
             var filtered = [];
 
             angular.forEach(tasks, function(item) {
-                if(item.getEndDate().diff(moment(), 'days') >= 0){
+
+                // show tasks with a delay of 4 hours
+                if(item.getEndDate().diff(moment()) >= -14400000){
                     filtered.push(item);
                 }
             });
