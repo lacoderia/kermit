@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function loginController($location, loginService) {
+    function loginController($location, $mdToast, loginService) {
 
         /**
          *
@@ -15,24 +15,35 @@
             password: undefined
         };
 
-        ctrl.formErrorMessage = '';
+        ctrl.loading = false;
 
         // Function to authenticate a user
         ctrl.login = function() {
-
-            ctrl.formErrorMessage = '';
+            document.activeElement.blur();
 
             if(ctrl.loginForm.$valid) {
+
+                ctrl.loading = true;
 
                 loginService.login(ctrl.credentials)
                     .then(function(data) {
                         if(data.user){
                             $location.path('/todo');
                         }
+                        ctrl.loading = false;
                     }, function(error) {
+                        var errorText = 'Ocurrió un error, por favor intenta más tarde.';
                         if(error && error.errors){
-                            ctrl.formErrorMessage = error.errors[0].title;
+                            errorText = error.errors[0].title;
                         }
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(errorText)
+                                .position('top right')
+                        );
+
+                        ctrl.loading = false;
                     });
             }
 

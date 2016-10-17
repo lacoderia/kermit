@@ -21,9 +21,6 @@
                             };
 
                             sessionService.setHttpHeaders(headers);
-
-                            var user = data.user;
-                            sessionService.createSession(user);
                         }
 
                         return data;

@@ -8,6 +8,7 @@ moment.tz.setDefault('America/Mexico_City');
 angular.module('dispatcher', [
     'ngRoute',
     'ngResource',
+    'ngMessages',
     'ngMaterial',
     'LocalStorageModule',
     'navigation',

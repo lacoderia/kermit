@@ -5,6 +5,8 @@
 
         var Session = undefined;
 
+        var _headers = undefined;
+
         var broadcast = function(msg, data) {
             $rootScope.$broadcast(msg, data);
         };
@@ -31,11 +33,13 @@
         };
 
         var getHttpHeaders = function(){
-            return localStorageService.cookie.get('fozzie-headers');
+            return _headers || localStorageService.cookie.get('kermit-headers');
         };
 
-        var configHttpHeaders = function(){
-            var headers = getHttpHeaders();
+        var configHttpHeaders = function(headers){
+            if (headers === undefined) {
+                headers = getHttpHeaders();
+            }
 
             $http.defaults.headers.common['access-token'] = headers.accessToken;
             $http.defaults.headers.common['expiry'] = headers.expiry;
@@ -45,12 +49,14 @@
         };
 
         var setHttpHeaders = function(headers){
-            localStorageService.cookie.set('fozzie-headers', headers);
+            localStorageService.cookie.set('kermit-headers', headers);
+            _headers = headers;
             configHttpHeaders(headers);
         };
 
         var unsetHttpHeaders = function(){
-            localStorageService.cookie.remove('fozzie-headers');
+            localStorageService.cookie.remove('kermit-headers');
+            _headers = undefined;
 
             $http.defaults.headers.common['access-token'] = undefined;
             $http.defaults.headers.common['expiry'] = undefined;
